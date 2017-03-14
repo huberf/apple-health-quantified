@@ -1,10 +1,13 @@
+print "Loading data..."
 heart_file = open('heart_rate.csv')
 raw_heart_data = heart_file.read()
+print "Parsing data..."
 first_heart_data = raw_heart_data.split("\n")
 heart_data = []
 for i in first_heart_data[1:len(first_heart_data)-2]:
     heart_data += [i.split(", ")]
 
+print "Processing data..."
 highs = []
 lows = []
 low_high = []
@@ -22,14 +25,16 @@ for i in heart_data:
         maxHigh = 0
         maxLow = 200
     if int(i[1]) > maxHigh:
-        maxHigh = i[1]
+        maxHigh = int(i[1])
     if int(i[1]) < maxLow:
-        maxLow = i[1]
+        maxLow = int(i[1])
     lastDay = i[0][0:10]
 
+print "Writing data..."
 low_high_file = open('heart/low_high.csv', 'w')
 toOutput = 'date,low,high\n'
 for i in low_high:
     toOutput += str(i[0]) + ',' + str(i[1]) + ',' + str(i[2]) + '\n'
 low_high_file.write(toOutput)
 low_high_file.close()
+print "Done."
